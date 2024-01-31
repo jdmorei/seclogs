@@ -1,0 +1,75 @@
+services:
+        #  frontend:
+        #image: blockchainApp/frontend
+        # ports:
+        # - 4200:4200
+        #stdin_open: true
+        #volumes:
+        # - ./frontend:/usr/src/app
+        #- /usr/src/app/node_modules
+        #restart: always
+        #networks:
+        #- blockchainapp
+        #depends_on:
+        #- backend
+
+  backend:
+    restart: always
+    image: blockchainapp/backend
+    depends_on:
+      - mongo
+    networks:
+      - blockchainapp
+    expose:
+      - "4000"
+    ports:
+      - "4000:4000"
+  
+  log-module:
+    restart: always
+    image: blockchainapp/log-module
+    expose:
+       - "3000"
+    ports:
+       - "3000:3000"
+    depends_on:
+       - rabbitmq
+    networks:
+       - blockchainapp
+
+  rabbitmq:
+     restart: always
+     image: rabbitmq:3-management
+     expose:
+       - "5672"
+       - "15672"
+
+  mongo:
+    restart: always
+    image: mongo:4.2.0
+    volumes:
+      - ./data:/data/db
+    networks:
+      - blockchainapp
+    expose:
+      - 27017
+
+  syslogng:
+    image: lscr.io/linuxserver/syslog-ng:latest
+    container_name: syslog-ng
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./config:/config
+    ports:
+      - 514:5514/udp
+      - 601:6601/tcp
+      - 6514:6514/tcp
+    restart: unless-stopped
+    networks:
+      - blockchainapp
+
+networks:
+  blockchainapp:

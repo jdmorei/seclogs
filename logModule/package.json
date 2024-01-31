@@ -1,0 +1,40 @@
+{
+  "name": "blockchainapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf dist && babel src --out-dir dist  --copy-files",
+    "start": "node dist/app.js",
+    "start:dev": "nodemon --exec babel-node src/app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/node": "^7.16.8",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.17.3",
+    "@babel/preset-env": "^7.16.11",
+    "nodemon": "^2.0.15",
+    "rimraf": "^3.0.2"
+  },
+  "dependencies": {
+    "@blockfrost/blockfrost-js": "^5.4.0",
+    "@emurgo/cardano-serialization-lib-nodejs": "^11.5.0",
+    "@solana/web3.js": "^1.36.0",
+    "amqplib": "^0.10.3",
+    "axios": "^1.1.2",
+    "bip39": "^3.1.0",
+    "cardano-wallet-js": "^1.4.0",
+    "cardanocli-js": "^4.0.1",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-basic-auth": "^1.2.1",
+    "websocket": "^1.0.34",
+    "ws": "^8.14.2"
+  }
+}
